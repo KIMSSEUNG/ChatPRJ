@@ -103,6 +103,7 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
                 ),
               ),
 
+              SizedBox(height: 50.0),
               // 나이 선택 위젯 호출
               AgeSelector(
                 //selectedMinAge: selectedMinAge,
