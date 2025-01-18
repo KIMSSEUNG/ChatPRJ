@@ -17,6 +17,10 @@ class _MaxAgePickerState extends State<MaxAgePicker> {
 
   @override
   Widget build(BuildContext context) {
+    // 화면 너비와 높이 변수 설정
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -33,24 +37,35 @@ class _MaxAgePickerState extends State<MaxAgePicker> {
         children: [
           Text(
             '최대 나이: ${widget.maximumAge - selectedIndex}',
-            style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: screenWidth * 0.047, // 화면 너비의 4.7%를 텍스트 크기로 설정
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          SizedBox(height: 4.0),
+          SizedBox(height: screenHeight * 0.005), // 화면 높이의 0.5% 여백 추가
           Container(
-            padding: const EdgeInsets.all(8.0), // 원하는 내부 여백 설정
+            padding: EdgeInsets.all(screenWidth * 0.02), // 화면 너비의 2% 내부 여백
             decoration: BoxDecoration(
               color: Colors.deepPurpleAccent, // 배경색 설정
-              borderRadius: BorderRadius.circular(15.0), // 둥근 모서리
+              borderRadius: BorderRadius.circular(screenWidth * 0.04), // 화면 너비의 4% 둥근 모서리
             ),
             child: Text(
               '${widget.maximumAge - selectedIndex}',
-              style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: screenWidth * 0.085,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          )
+          ),
         ],
       )
           : Padding(
-        padding: const EdgeInsets.only(right: 13.0, bottom: 5), // 원하는 여백 설정
+        padding: EdgeInsets.only(
+          right: screenWidth * 0.05, // 화면 너비의 5.5% 오른쪽 패딩
+          bottom: screenHeight * 0.008, // 화면 높이의 1% 아래 패딩
+        ),
         child: buildPicker(
           startValue: widget.maximumAge,
           itemCount: widget.maximumAge - widget.minimumAge + 1,
@@ -73,11 +88,13 @@ class _MaxAgePickerState extends State<MaxAgePicker> {
     required ValueChanged<int> onIndexChanged,
     bool isDescending = false,
   }) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
-      height: 70,
-      width: 70,
+      height: screenWidth * 0.22, // 화면 너비의 18% 높이 설정
+      width: screenWidth * 0.22, // 화면 너비의 18% 너비 설정
       child: CupertinoPicker(
-        itemExtent: 30,
+        itemExtent: screenWidth * 0.12, // 화면 너비의 8%를 아이템 높이로 설정
         backgroundColor: Colors.blue,
         onSelectedItemChanged: onIndexChanged,
         children: List.generate(itemCount, (index) {
@@ -85,7 +102,10 @@ class _MaxAgePickerState extends State<MaxAgePicker> {
           return Center(
             child: Text(
               value.toString(),
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: screenWidth * 0.07, // 화면 너비의 4% 텍스트 크기
+              ),
             ),
           );
         }),

@@ -35,7 +35,7 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
                     text: '동물 ',
                     style: TextStyle(
                       color: Color(0xFFBE95C4),
-                      fontSize: 40,
+                      fontSize: MediaQuery.of(context).size.width * 0.15,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -43,7 +43,7 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
                     text: '챗',
                     style: TextStyle(
                       color: Color(0xFFE0B1CB),
-                      fontSize: 40,
+                      fontSize: MediaQuery.of(context).size.width * 0.11,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -68,7 +68,7 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 20), // 원하는 높이 설정 (여기서는 16dp)
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
               // 좋아하는 동물
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
@@ -79,13 +79,13 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
                 child: Text(
                   '좋아하는 동물',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: MediaQuery.of(context).size.width * 0.1,
                     fontWeight: FontWeight.bold,
                     color: Colors.white, // 텍스트 색상 (가독성 위해 흰색)
                   ),
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
               // INFJ
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 23, vertical: 8),
@@ -96,14 +96,16 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
                 child: Text(
                   'INFJ',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: MediaQuery.of(context).size.width * 0.1,
                     fontWeight: FontWeight.bold,
                     color: Colors.white, // 텍스트 색상 (가독성 위해 흰색)
                   ),
                 ),
               ),
 
-              SizedBox(height: 50.0),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.06,
+              ),
               // 나이 선택 위젯 호출
               AgeSelector(
                 //selectedMinAge: selectedMinAge,
@@ -116,7 +118,7 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
                 // },
               ),
 
-              SizedBox(height: 30),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.07),
               Expanded(
                 child: GridView.count(
                   crossAxisCount: 3,  // 한 줄에 3개의 항목
@@ -149,13 +151,13 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, // 아이콘과 텍스트 정렬
             children: [
-              Icon(icon, size: 35, color: Colors.white), // 아이콘
-              SizedBox(height: 8), // 아이콘과 텍스트 간격
+              Icon(icon, size: MediaQuery.of(context).size.width * 0.11, color: Colors.white), // 아이콘
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01), // 아이콘과 텍스트 간격
               Text(
                 label,
                 style: TextStyle(
                   color: Colors.white, // 텍스트 색
-                  fontSize: 15,
+                  fontSize: MediaQuery.of(context).size.width * 0.04,
                   fontWeight: FontWeight.bold,
                 ),
               ),

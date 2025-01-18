@@ -12,7 +12,7 @@ class AgeSelector extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 110,
+            height: MediaQuery.of(context).size.height * 0.145, // 화면 높이의 10%
             decoration: BoxDecoration(
               color: Colors.grey,
               borderRadius: BorderRadius.circular(15),
