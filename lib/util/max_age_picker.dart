@@ -1,25 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MaxAgePicker extends StatefulWidget {
   final int minimumAge;
   final int maximumAge;
   final double parentHeight;
+  final int minStorageIndex;
+  final ValueChanged<int> onIndexChanged;
 
-  MaxAgePicker({required this.minimumAge, required this.maximumAge , required this.parentHeight});
+  MaxAgePicker(
+      {required this.minimumAge,
+        required this.maximumAge,
+        required this.parentHeight,
+        required this.minStorageIndex,
+        required this.onIndexChanged});
 
   @override
   _MaxAgePickerState createState() => _MaxAgePickerState();
 }
 
-class _MaxAgePickerState extends State<MaxAgePicker> {
+class _MaxAgePickerState extends State<MaxAgePicker> with WidgetsBindingObserver {
   bool isVisible = false;
   int selectedIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+    selectedIndex = 0; // 부모로부터 전달된 초기 maxIndex로 설정
+  }
+
+  @override
   Widget build(BuildContext context) {
     // 화면 너비와 높이 변수 설정
-    double screenWidth =  MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = widget.parentHeight;
 
     return GestureDetector(
@@ -76,6 +90,7 @@ class _MaxAgePickerState extends State<MaxAgePicker> {
             setState(() {
               selectedIndex = index;
             });
+            widget.onIndexChanged(index); // 부모로 index 전달
           },
           isDescending: true,
         ),
@@ -100,15 +115,16 @@ class _MaxAgePickerState extends State<MaxAgePicker> {
         itemExtent: screenWidth * 0.12, // 화면 너비의 8%를 아이템 높이로 설정
         backgroundColor: Colors.transparent, // Picker 배경을 투명하게 설정
         onSelectedItemChanged: onIndexChanged,
-        children: List.generate(itemCount, (index) {
+        scrollController: FixedExtentScrollController(initialItem: selectedIndex), // 초기 선택 인덱스 설정
+        children: List.generate(20 - widget.minStorageIndex, (index) {
           int value = isDescending ? startValue - index : startValue + index;
           return Center(
             child: Text(
               value.toString(),
               style: TextStyle(
                 color: Colors.black,
-                  fontSize: screenHeight * 0.23,
-                fontWeight: FontWeight.bold
+                fontSize: screenHeight * 0.23,
+                fontWeight: FontWeight.bold,
               ),
             ),
           );
@@ -116,4 +132,31 @@ class _MaxAgePickerState extends State<MaxAgePicker> {
       ),
     );
   }
+
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this); // 앱 라이프사이클 관찰 종료
+    super.dispose();
+  }
+
+  // 앱 상태 변화 감지
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.paused || state == AppLifecycleState.detached) {
+      // 앱이 백그라운드로 갔을 때 또는 종료될 때 데이터 저장
+      saveData();
+      print('App is paused or about to be terminated');
+    }
+  }
+
+}
+
+Future<void> saveData() async {
+  final prefs = await SharedPreferences.getInstance();  // SharedPreferences 인스턴스 얻기
+  prefs.setString('username', 'FlutterUser');  // 문자열 데이터 저장
+  prefs.setInt('age', 25);  // 정수 데이터 저장
+  prefs.setBool('isLoggedIn', true);  // 불리언 데이터 저장
 }
