@@ -14,8 +14,6 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
   bool isDarkMode = false;
   int selectedMinAge = 20; // 설정 최소 나이 불러오기
   int selectedMaxAge = 40; // 설정 최대 나이 불러오기
-
-  // MediaQuery 비율 값으로 final 변수 정의
   double _height = 0.0;
   double _width = 0.0;
 

@@ -5,8 +5,16 @@ class MinAgePicker extends StatefulWidget {
   final int minimumAge;
   final int maximumAge;
   final double parentHeight;
+  final int maxStorageIndex;
+  final ValueChanged<int> onIndexChanged;
 
-  MinAgePicker({required this.minimumAge, required this.maximumAge , required this.parentHeight});
+  MinAgePicker(
+      {required this.minimumAge,
+        required this.maximumAge,
+        required this.parentHeight,
+        required this.maxStorageIndex,
+        required this.onIndexChanged,
+      });
 
   @override
   _MinAgePickerState createState() => _MinAgePickerState();
@@ -15,6 +23,12 @@ class MinAgePicker extends StatefulWidget {
 class _MinAgePickerState extends State<MinAgePicker> {
   bool isVisible = false;
   int selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedIndex = 0; // 부모로부터 전달된 초기 minIndex로 설정
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +90,7 @@ class _MinAgePickerState extends State<MinAgePicker> {
             setState(() {
               selectedIndex = index;
             });
+            widget.onIndexChanged(index); // 부모로 index 전달
           },
         ),
       ),
@@ -98,14 +113,15 @@ class _MinAgePickerState extends State<MinAgePicker> {
         itemExtent: screenWidth * 0.12, // 화면 너비의 8%를 아이템 높이로 설정
         backgroundColor: Colors.transparent, // Picker 배경을 투명하게 설정
         onSelectedItemChanged: onIndexChanged,
-        children: List.generate(itemCount, (index) {
+        scrollController: FixedExtentScrollController(initialItem: selectedIndex), // 초기 선택 인덱스 설정
+        children: List.generate(20-widget.maxStorageIndex, (index) {
           return Center(
             child: Text(
               (startValue + index).toString(),
               style: TextStyle(
-                color: Colors.black,
+                  color: Colors.black,
                   fontSize: screenHeight * 0.23,
-                fontWeight: FontWeight.bold
+                  fontWeight: FontWeight.bold
               ),
             ),
           );

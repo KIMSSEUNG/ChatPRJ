@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'min_age_picker.dart';
 import 'max_age_picker.dart';
 
-class AgeSelector extends StatelessWidget {
+class AgeSelector extends StatefulWidget {
   final int minimumAge = 20;
   final int maximumAge = 40;
+
+  @override
+  _AgeSelectorState createState() => _AgeSelectorState();
+}
+
+class _AgeSelectorState extends State<AgeSelector> {
+  int minStorageIndex = 0;
+  int maxStorageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +40,15 @@ class AgeSelector extends StatelessWidget {
                     top: screenHeight * 0.02, // 화면 높이의 2% 위쪽 패딩
                   ),
                   child: MinAgePicker(
-                    minimumAge: minimumAge,
-                    maximumAge: maximumAge,
+                    minimumAge: widget.minimumAge,
+                    maximumAge: widget.maximumAge,
                     parentHeight: maxHeight,
+                    maxStorageIndex: maxStorageIndex,  // 부모 상태를 전달
+                    onIndexChanged: (index) {
+                      setState(() {
+                        minStorageIndex = index;  // 부모에서 상태 변경
+                      });
+                    },
                   ),
                 ),
                 Padding(
@@ -43,9 +57,15 @@ class AgeSelector extends StatelessWidget {
                     top: screenHeight * 0.02, // 화면 높이의 2% 위쪽 패딩
                   ),
                   child: MaxAgePicker(
-                    minimumAge: minimumAge,
-                    maximumAge: maximumAge,
+                    minimumAge: widget.minimumAge,
+                    maximumAge: widget.maximumAge,
                     parentHeight: maxHeight,
+                    minStorageIndex: minStorageIndex,  // 부모 상태를 전달
+                    onIndexChanged: (index) {
+                      setState(() {
+                        maxStorageIndex = index;  // 부모에서 상태 변경
+                      });
+                    },
                   ),
                 ),
               ],
