@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class MinAgePicker extends StatefulWidget {
   final int minimumAge;
   final int maximumAge;
+  final double parentHeight;
 
-  MinAgePicker({required this.minimumAge, required this.maximumAge});
+  MinAgePicker({required this.minimumAge, required this.maximumAge , required this.parentHeight});
 
   @override
   _MinAgePickerState createState() => _MinAgePickerState();
@@ -19,7 +20,7 @@ class _MinAgePickerState extends State<MinAgePicker> {
   Widget build(BuildContext context) {
     // 화면 너비와 높이를 변수로 정의
     double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    double screenHeight = widget.parentHeight;
 
     return GestureDetector(
       onTap: () {
@@ -38,22 +39,22 @@ class _MinAgePickerState extends State<MinAgePicker> {
           Text(
             '최소 나이: ${widget.minimumAge + selectedIndex}',
             style: TextStyle(
-              fontSize: screenWidth * 0.047, // 화면 너비의 4.7%를 텍스트 크기로 설정
+              fontSize: screenHeight * 0.17,
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: screenHeight * 0.005), // 화면 높이의 0.5% 여백 추가
+          SizedBox(height: screenHeight * 0.03), // 화면 높이의 0.5% 여백 추가
           Container(
             padding: EdgeInsets.all(screenWidth * 0.02), // 화면 너비의 2% 패딩
             decoration: BoxDecoration(
-              color: Colors.deepPurpleAccent, // 배경색 설정
+              color: Color(0xFF5e548e), // 배경색 설정
               borderRadius: BorderRadius.circular(screenWidth * 0.04), // 화면 너비의 4% 반경
             ),
             child: Text(
               '${widget.minimumAge + selectedIndex}',
               style: TextStyle(
-                fontSize: screenWidth * 0.085, // 화면 너비의 9% 텍스트 크기
+                fontSize: screenHeight * 0.2,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
@@ -70,6 +71,7 @@ class _MinAgePickerState extends State<MinAgePicker> {
           startValue: widget.minimumAge,
           itemCount: widget.maximumAge - widget.minimumAge + 1,
           selectedIndex: selectedIndex,
+          screenHeight: screenHeight,
           onIndexChanged: (index) {
             setState(() {
               selectedIndex = index;
@@ -84,16 +86,17 @@ class _MinAgePickerState extends State<MinAgePicker> {
     required int startValue,
     required int itemCount,
     required int selectedIndex,
+    required double screenHeight,
     required ValueChanged<int> onIndexChanged,
   }) {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      height: screenWidth * 0.22, // 화면 너비의 18% 높이 설정
+      height: screenHeight * 0.7, // 화면 너비의 18% 높이 설정
       width: screenWidth * 0.22, // 화면 너비의 18% 너비 설정
       child: CupertinoPicker(
-        itemExtent: screenWidth * 0.08, // 화면 너비의 8%를 아이템 높이로 설정
-        backgroundColor: Colors.red,
+        itemExtent: screenWidth * 0.12, // 화면 너비의 8%를 아이템 높이로 설정
+        backgroundColor: Colors.transparent, // Picker 배경을 투명하게 설정
         onSelectedItemChanged: onIndexChanged,
         children: List.generate(itemCount, (index) {
           return Center(
@@ -101,7 +104,8 @@ class _MinAgePickerState extends State<MinAgePicker> {
               (startValue + index).toString(),
               style: TextStyle(
                 color: Colors.black,
-                fontSize: screenWidth * 0.07, // 화면 너비의 4% 텍스트 크기
+                  fontSize: screenHeight * 0.23,
+                fontWeight: FontWeight.bold
               ),
             ),
           );

@@ -8,29 +8,46 @@ class AgeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 화면 너비와 높이 가져오기
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    double maxHeight = screenHeight * 0.145;
+
     return Container(
       child: Column(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.145, // 화면 높이의 10%
+            width: screenWidth, // 화면 너비에 맞춤
+            height: maxHeight, // 화면 높이의 14.5%로 높이 설정
             decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(15),
+              color: Color(0xFF9f86c0),
+              borderRadius: BorderRadius.circular(screenWidth * 0.04), // 화면 너비의 4% 라디우스
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                    padding: const EdgeInsets.only(left: 50.0 , top: 15 ),
-                    child:
-                      MinAgePicker(minimumAge: minimumAge, maximumAge: maximumAge)
-                )
-                ,
+                  padding: EdgeInsets.only(
+                    left: screenWidth * 0.12, // 화면 너비의 12% 왼쪽 패딩
+                    top: screenHeight * 0.02, // 화면 높이의 2% 위쪽 패딩
+                  ),
+                  child: MinAgePicker(
+                    minimumAge: minimumAge,
+                    maximumAge: maximumAge,
+                    parentHeight: maxHeight,
+                  ),
+                ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 50.0 , top: 15),
-                  child:
-                    MaxAgePicker(minimumAge: minimumAge, maximumAge: maximumAge),
-                )
+                  padding: EdgeInsets.only(
+                    right: screenWidth * 0.12, // 화면 너비의 12% 오른쪽 패딩
+                    top: screenHeight * 0.02, // 화면 높이의 2% 위쪽 패딩
+                  ),
+                  child: MaxAgePicker(
+                    minimumAge: minimumAge,
+                    maximumAge: maximumAge,
+                    parentHeight: maxHeight,
+                  ),
+                ),
               ],
             ),
           ),

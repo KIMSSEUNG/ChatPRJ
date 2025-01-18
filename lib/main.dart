@@ -15,8 +15,16 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
   int selectedMinAge = 20; // 설정 최소 나이 불러오기
   int selectedMaxAge = 40; // 설정 최대 나이 불러오기
 
+  // MediaQuery 비율 값으로 final 변수 정의
+  double _height = 0.0;
+  double _width = 0.0;
+
   @override
   Widget build(BuildContext context) {
+    // 화면 크기 기반 비율 계산
+    _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
+
     return MaterialApp(
       theme: ThemeData(
         brightness: isDarkMode ? Brightness.dark : Brightness.light,
@@ -26,7 +34,7 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
         backgroundColor: isDarkMode ? Colors.black : Colors.white,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.transparent,
+          backgroundColor: Color(0xFF9F86C0).withOpacity(0.25),
           flexibleSpace: Center(
             child: RichText(
               text: TextSpan(
@@ -35,7 +43,7 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
                     text: '동물 ',
                     style: TextStyle(
                       color: Color(0xFFBE95C4),
-                      fontSize: MediaQuery.of(context).size.width * 0.15,
+                      fontSize: _width * 0.15,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -43,7 +51,7 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
                     text: '챗',
                     style: TextStyle(
                       color: Color(0xFFE0B1CB),
-                      fontSize: MediaQuery.of(context).size.width * 0.11,
+                      fontSize: _width * 0.11,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -68,10 +76,10 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+              SizedBox(height: _height * 0.05),
               // 좋아하는 동물
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                padding: EdgeInsets.symmetric(horizontal: _width*0.03, vertical: _height*0.006),
                 decoration: BoxDecoration(
                   color: Color(0xFF5E548E), // 박스 배경색
                   borderRadius: BorderRadius.circular(12), // 둥근 모서리
@@ -79,16 +87,16 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
                 child: Text(
                   '좋아하는 동물',
                   style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.1,
+                    fontSize: _width * 0.09,
                     fontWeight: FontWeight.bold,
                     color: Colors.white, // 텍스트 색상 (가독성 위해 흰색)
                   ),
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+              SizedBox(height: _height * 0.045),
               // INFJ
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 23, vertical: 8),
+                padding: EdgeInsets.symmetric(horizontal: _width*0.03, vertical: _height*0.004),
                 decoration: BoxDecoration(
                   color: Color(0xFFBE95C4), // 박스 배경색
                   borderRadius: BorderRadius.circular(8), // 둥근 모서리
@@ -96,15 +104,14 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
                 child: Text(
                   'INFJ',
                   style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.1,
+                    fontSize: _width * 0.1,
                     fontWeight: FontWeight.bold,
                     color: Colors.white, // 텍스트 색상 (가독성 위해 흰색)
                   ),
                 ),
               ),
-
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.06,
+                height: _height * 0.06,
               ),
               // 나이 선택 위젯 호출
               AgeSelector(
@@ -117,12 +124,11 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
                 //   });
                 // },
               ),
-
-              SizedBox(height: MediaQuery.of(context).size.height * 0.07),
+              SizedBox(height: _height * 0.07),
               Expanded(
                 child: GridView.count(
                   crossAxisCount: 3,  // 한 줄에 3개의 항목
-                  crossAxisSpacing: 13,  // 항목들 간의 가로 간격
+                  crossAxisSpacing: 16,  // 항목들 간의 가로 간격
                   childAspectRatio: 1,  // 각 항목의 가로:세로 비율
                   children: [
                     _buildIconButton(Icons.send, '메세지 보내기'),
@@ -148,22 +154,22 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
         },
         borderRadius: BorderRadius.circular(16), // InkWell의 테두리 둥글게
         splashColor: Colors.black.withOpacity(0.2), // 누를 때 퍼지는 효과
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, // 아이콘과 텍스트 정렬
-            children: [
-              Icon(icon, size: MediaQuery.of(context).size.width * 0.11, color: Colors.white), // 아이콘
-              SizedBox(height: MediaQuery.of(context).size.height * 0.01), // 아이콘과 텍스트 간격
-              Text(
-                label,
-                style: TextStyle(
-                  color: Colors.white, // 텍스트 색
-                  fontSize: MediaQuery.of(context).size.width * 0.04,
-                  fontWeight: FontWeight.bold,
-                ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center, // 아이콘과 텍스트 정렬
+          children: [
+            Icon(icon, size: _width * 0.09, color: Colors.white), // 아이콘
+            SizedBox(height: _height * 0.01), // 아이콘과 텍스트 간격
+            Text(
+              label,
+              style: TextStyle(
+                color: Colors.white, // 텍스트 색
+                fontSize: _width * 0.04,
+                fontWeight: FontWeight.bold,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      );
-    }
+      ),
+    );
+  }
 }
