@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
+
 
 class MaxAgePicker extends StatefulWidget {
   final int minimumAge;
   final int maximumAge;
   final double parentHeight;
   final int minStorageIndex;
+  final int maxIndex;
   final ValueChanged<int> onIndexChanged;
 
   MaxAgePicker(
@@ -14,20 +18,24 @@ class MaxAgePicker extends StatefulWidget {
         required this.maximumAge,
         required this.parentHeight,
         required this.minStorageIndex,
-        required this.onIndexChanged});
+        required this.onIndexChanged,
+        required this.maxIndex,
+      });
 
   @override
   _MaxAgePickerState createState() => _MaxAgePickerState();
+
 }
 
-class _MaxAgePickerState extends State<MaxAgePicker> with WidgetsBindingObserver {
+class _MaxAgePickerState extends State<MaxAgePicker> {
   bool isVisible = false;
   int selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    selectedIndex = 0; // 부모로부터 전달된 초기 maxIndex로 설정
+    selectedIndex = widget.maxIndex;
+
   }
 
   @override
@@ -35,7 +43,6 @@ class _MaxAgePickerState extends State<MaxAgePicker> with WidgetsBindingObserver
     // 화면 너비와 높이 변수 설정
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = widget.parentHeight;
-
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -132,31 +139,4 @@ class _MaxAgePickerState extends State<MaxAgePicker> with WidgetsBindingObserver
       ),
     );
   }
-
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this); // 앱 라이프사이클 관찰 종료
-    super.dispose();
-  }
-
-  // 앱 상태 변화 감지
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-
-    if (state == AppLifecycleState.paused || state == AppLifecycleState.detached) {
-      // 앱이 백그라운드로 갔을 때 또는 종료될 때 데이터 저장
-      saveData();
-      print('App is paused or about to be terminated');
-    }
-  }
-
-}
-
-Future<void> saveData() async {
-  final prefs = await SharedPreferences.getInstance();  // SharedPreferences 인스턴스 얻기
-  prefs.setString('username', 'FlutterUser');  // 문자열 데이터 저장
-  prefs.setInt('age', 25);  // 정수 데이터 저장
-  prefs.setBool('isLoggedIn', true);  // 불리언 데이터 저장
 }
