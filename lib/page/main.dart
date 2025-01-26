@@ -1,6 +1,7 @@
-import 'package:animal_project/send.dart';
+import 'package:animal_project/page/receive.dart';
+import 'package:animal_project/page/send.dart';
 import 'package:flutter/material.dart';
-import 'util/age_selector.dart';
+import '../util/age_selector.dart';
 
 void main() {
   runApp(AnimalChatApp());
@@ -157,6 +158,13 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
                   MaterialPageRoute(builder: (context) => SendPage()),
                 );
               }
+              else if (label == '받은 메세지') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ReceivePage()),
+                );
+              }
+
             },
             borderRadius: BorderRadius.circular(16),
             splashColor: Colors.black.withOpacity(0.2),
