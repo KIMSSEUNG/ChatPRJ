@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 class MinAgePicker extends StatefulWidget {
   final int minimumAge;
   final int maximumAge;
   final double parentHeight;
   final int maxStorageIndex;
+  final int minIndex;
   final ValueChanged<int> onIndexChanged;
 
   MinAgePicker(
@@ -14,6 +17,7 @@ class MinAgePicker extends StatefulWidget {
         required this.parentHeight,
         required this.maxStorageIndex,
         required this.onIndexChanged,
+        required this.minIndex,
       });
 
   @override
@@ -27,7 +31,7 @@ class _MinAgePickerState extends State<MinAgePicker> {
   @override
   void initState() {
     super.initState();
-    selectedIndex = 0; // 부모로부터 전달된 초기 minIndex로 설정
+    selectedIndex = widget.minIndex;
   }
 
   @override

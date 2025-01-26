@@ -1,3 +1,4 @@
+import 'package:animal_project/send.dart';
 import 'package:flutter/material.dart';
 import 'util/age_selector.dart';
 
@@ -143,31 +144,40 @@ class _AnimalChatAppState extends State<AnimalChatApp> {
   }
 
   Widget _buildIconButton(IconData icon, String label) {
-    return Material(
-      color: Color(0xFF9F86C0), // 기본 배경색
-      borderRadius: BorderRadius.circular(16), // 버튼 모서리 둥글게
-      child: InkWell(
-        onTap: () {
-          //print('$label 버튼이 눌렸습니다.');
-        },
-        borderRadius: BorderRadius.circular(16), // InkWell의 테두리 둥글게
-        splashColor: Colors.black.withOpacity(0.2), // 누를 때 퍼지는 효과
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // 아이콘과 텍스트 정렬
-          children: [
-            Icon(icon, size: _width * 0.09, color: Colors.white), // 아이콘
-            SizedBox(height: _height * 0.01), // 아이콘과 텍스트 간격
-            Text(
-              label,
-              style: TextStyle(
-                color: Colors.white, // 텍스트 색
-                fontSize: _width * 0.04,
-                fontWeight: FontWeight.bold,
-              ),
+    return Builder(
+      builder: (context) {
+        return Material(
+          color: Color(0xFF9F86C0),
+          borderRadius: BorderRadius.circular(16),
+          child: InkWell(
+            onTap: () {
+              if (label == '메세지 보내기') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SendPage()),
+                );
+              }
+            },
+            borderRadius: BorderRadius.circular(16),
+            splashColor: Colors.black.withOpacity(0.2),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, size: _width * 0.09, color: Colors.white),
+                SizedBox(height: _height * 0.01),
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: _width * 0.04,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
