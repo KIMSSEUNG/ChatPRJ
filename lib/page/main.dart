@@ -3,9 +3,9 @@ import 'package:animal_project/page/send.dart';
 import 'package:flutter/material.dart';
 import '../util/age_selector.dart';
 
-void main() {
-  runApp(AnimalChatApp());
-}
+// void main() {
+//   runApp(AnimalChatApp());
+// }
 
 class AnimalChatApp extends StatefulWidget {
   @override
