@@ -4,4 +4,11 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <application>
+        <meta-data
+            android:name="com.google.android.gms.auth.api.signin.WebClientId"
+            android:value="19173466087-8gi7l5v4fh6a660uf2oru44bqc1ho71r.apps.googleusercontent.com"/>
+    </application>
 </manifest>
+
+

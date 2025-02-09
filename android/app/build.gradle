@@ -10,13 +10,17 @@ android {
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
+    dependencies {
+        implementation 'com.google.android.gms:play-services-auth:20.7.0'
+    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = JavaVersion.VERSION_17
     }
 
     defaultConfig {
@@ -28,6 +32,15 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+    }
+
+    signingConfigs {
+        debug {
+            keyAlias 'login-key'           // 키 별칭 (alias)
+            keyPassword '!wk883924'    // 개별 키 비밀번호
+            storeFile file('upload-keystore.jks')  // 키스토어 파일 경로
+            storePassword '!wk883924'  // 키스토어 전체 비밀번호
+        }
     }
 
     buildTypes {
