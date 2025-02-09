@@ -29,17 +29,18 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   logging: ^1.0.1
+  path_provider: ^2.0.13 # 최신 버전 확인 후 업데이트
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  google_sign_in: ^6.1.6  # Google 로그인 패키지
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
   flutter_test:
-
     sdk: flutter
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -58,7 +59,10 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  assets:
+    - assets/google_icon.png
+    - assets/login_icon.png
+    - assets/register_icon.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
