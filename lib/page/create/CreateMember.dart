@@ -30,7 +30,7 @@ class _CreateMemberState extends State<CreateMember> {
 
   // 이메일 형식 체크 (간단한 정규식)
   bool _isValidEmail(String email) {
-    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{3,4}$');
     return emailRegex.hasMatch(email);
   }
 
@@ -48,14 +48,14 @@ class _CreateMemberState extends State<CreateMember> {
       } else if (_isDuplicateID(_idController.text)) {
         idError = "중복된 아이디가 있습니다.";
       } else if (_idController.text.length < 7) {
-        idError = "해당 하는 길이 7자 보다 입력 아이디 길이가 짧습니다.";
+        idError = "7자 보다 입력 아이디 길이가 짧습니다.";
       }
 
       // 2. PW 검증
       if (_pwController.text.isEmpty) {
         pwError = "값이 없습니다.";
       } else if (_pwController.text.length < 7) {
-        pwError = "해당 하는 길이 7자 보다 입력 패스워드 길이가 짧습니다.";
+        pwError = "7자 보다 입력 패스워드 길이가 짧습니다.";
       }
 
       // 3. PW 확인 검증
@@ -115,6 +115,9 @@ class _CreateMemberState extends State<CreateMember> {
             controller: _idController,
             errorText: idError,
           ),
+
+          SizedBox(height: screenHeight * 0.03),  // 간격
+
           _buildInputField(
             screenWidth: screenWidth,
             labelText: "PW",
@@ -122,6 +125,9 @@ class _CreateMemberState extends State<CreateMember> {
             controller: _pwController,
             errorText: pwError,
           ),
+
+          SizedBox(height: screenHeight * 0.03),  // 간격
+
           _buildInputField(
             screenWidth: screenWidth,
             labelText: "PW 확인",
@@ -129,6 +135,9 @@ class _CreateMemberState extends State<CreateMember> {
             controller: _pwConfirmController,
             errorText: pwConfirmError,
           ),
+
+          SizedBox(height: screenHeight * 0.03),  // 간격
+
           _buildInputField(
             screenWidth: screenWidth,
             labelText: "e-mail",
@@ -137,7 +146,7 @@ class _CreateMemberState extends State<CreateMember> {
             errorText: emailError,
           ),
 
-          SizedBox(height: screenHeight * 0.05),  // 간격
+          SizedBox(height: screenHeight * 0.03),  // 간격
 
           // 입력 버튼
           SizedBox(
