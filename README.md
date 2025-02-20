@@ -38,6 +38,9 @@
 ```
 ### Spring boot
 
+## 클래스 다이어그램
+![image](https://github.com/user-attachments/assets/d2b14cf5-25b9-4e1f-a4af-da7470690e06)
+
 ## 기여 방법
 1. feature-브랜치명으로 새로운 브랜치 생성
 2. 작업 후 PR(Pull Request) 요청
